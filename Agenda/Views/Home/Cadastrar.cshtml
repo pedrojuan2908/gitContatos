@@ -1,0 +1,77 @@
+﻿<div id="telaCadastrar">
+    @{
+        ViewData["Title"] = "Cadastrar";
+    }
+    <h2 style="text-align:center">@ViewData["Title"]</h2>
+    <h3>@ViewData["Message"]</h3>
+
+    <form class="needs-validation" novalidate="">
+        <!-- INICIO TELA DE CADASTRO -->
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                @Html.ActionLink("Voltar a lista", "Index", "Home", new { }, null)
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" placeholder="" required="">    
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="telefone">Telefone</label>
+                <input type="text" class="form-control" id="telefone" placeholder="(00)0000-0000" required="">
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="email@exemplo.com">
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="cidade">Cidade</label>
+                <input type="text" class="form-control" id="cidade" placeholder="" required="">
+            </div>
+        </div>
+        <hr class="mb-6">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="btn btn-primary btn-lg btn-block" onclick="Cadastrar()">Cadastrar</div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        $('#telefone').mask('(00) 0000-00000');
+    });
+
+
+    function Cadastrar() 
+    {
+        var _nome = $('#nome').val();
+        var _telefone = $('#telefone').val();
+        var _email = $('#email').val();
+        var _cidade = $('#cidade').val();
+
+        if (_nome.length > 0) {
+            console.log(_nome, _telefone, _email, _cidade);
+
+            $.post("cadastrarAction", { "nome": _nome, "telefone": _telefone, "email": _email, "cidade": _cidade },
+                function (dados) {
+                    console.log(dados);
+
+                    alert("Cadastrado com sucesso!");
+                    $("#telaCadastrar").html(dados);
+                });
+        }
+        else {
+            alert("Favor inserir todos os campos!");
+        }
+    }
+
+
+</script>

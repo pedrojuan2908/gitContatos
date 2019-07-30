@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Lista";
+}
+<script src="~/js/jquery.mask.js"></script>
+<h2 style="text-align:center">@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+<html>
+<body>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>    
+            <tr>
+                <th style="text-align:center">Nome</th>
+                <th style="text-align:center">Telefone</th>
+                <th style="text-align:center">Email</th>
+                <th style="text-align:center">Cidade</th>
+                <th style="text-align:center">@Html.ActionLink("Adicionar Contato", "Cadastrar", "Home", new { }, null)</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in @ViewBag.dados)
+            {
+                <tr>
+                    <td style="text-align:center">@item.CON_NOME</td>
+                    <td style="text-align:center">@item.CON_TELEFONE</td>
+                    <td style="text-align:center">@item.CON_EMAIL</td>
+                    <td style="text-align:center">@item.CON_CIDADE</td>
+                    <td style="text-align:center"> @Html.ActionLink("Atualizar", "Atualizar", "Home", new { codigoContato = @item.CON_ID }, null)</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <script>
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿<div id="telaAtualizar">
+    @{
+        ViewData["Title"] = "Atualizar";
+    }
+    <script src="~/js/jquery.mask.js"></script>
+    <h2 style="text-align:center">Atualizar </h2>
+    <form class="needs-validation" novalidate="">
+        <!-- INICIO TELA DE ATUALIZAR -->
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                @Html.ActionLink("Voltar a lista", "Index", "Home", new { }, null)
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" placeholder="" value="@ViewBag.nome" required="">
+                <input hidden id="codigoContato" value="@ViewBag.codigo">
+                <!--<div class="invalid-feedback">
+                    nome
+                </div>-->
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="telefone">Telefone</label>
+                <input type="text" class="form-control" id="telefone" value="@ViewBag.telefone" required="">
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" value="@ViewBag.email">
+            </div>
+            <div style="text-align:center" class="col-md-3 mb-3">
+                <label for="cidade">Cidade</label>
+                <input type="text" class="form-control" id="cidade" placeholder="" value="@ViewBag.cidade">
+            </div>
+        </div>
+        <hr class="mb-6">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+            </div>
+            <div class="col-md-4 mb-3">
+
+                <div class="btn btn-primary btn-lg btn-block" onclick="Gravar()">Atualizar</div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div style="text-align:center" class="btn btn-danger btn-lg btn-block" onclick="Excluir()">Excluir</div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        $('#telefone').mask('(00) 0000-00000');
+    });
+
+    function Gravar() {
+
+        var _codigoContato = $('#codigoContato').val();
+        var _nome = $('#nome').val();
+        var _telefone = $('#telefone').val();
+        var _email = $('#email').val();
+        var _cidade = $('#cidade').val();
+
+        console.log(_codigoContato + _nome + _telefone + _email + _cidade);
+
+        // Chama o controller executando a atualização da linha
+        $.post("atualizarCadastro", { "codigoContato": _codigoContato, "nome": _nome, "telefone": _telefone, "email": _email, "cidade": _cidade },
+            function (dados) {
+                console.log(dados);
+                alert("Atualizado com sucesso!");
+                $("#telaAtualizar").html(dados);
+            });
+    }
+
+    function Excluir() {
+        var _codigoContato = $('#codigoContato').val();
+        $.post("excluirCadastro", { "codigoContato": _codigoContato },
+            function (dados) {
+                console.log(dados);
+                alert("Excluído com sucesso!");
+                $("#telaAtualizar").html(dados);
+            });
+    }
+
+</script>
